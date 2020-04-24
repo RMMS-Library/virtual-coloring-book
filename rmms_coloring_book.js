@@ -1,76 +1,77 @@
 let pages = [];
-let canvas, canvasWidth;
+let canvas, canvasWidth, canvasHeight;
 let brushSize = 20;
 let pageNumber = 0;
+let number_of_pages = 10
 
 function preload() {
-  pages.push(loadImage("pages/cover.jpg"));
-
-  for (let i = 0; i < 9; i++) {
-    pages.push(loadImage(`pages/page_${i+1}.jpg`));
+  for (let i = 0; i < number_of_pages; i++) {
+    pages.push(loadImage(`pages/page_${i}.jpg`));
   }
 }
 
 function setup() {
-  $("#instructions").modal("show");
+  showModal();
 
-  let img = pages[pageNumber];
+  let defaultPage = pages[pageNumber];
 
-  canvasWidth = (windowHeight*img.width)/img.height;
-  canvas = createCanvas(canvasWidth, windowHeight - 50);
+  canvasWidth = (windowHeight*defaultPage.width)/defaultPage.height;
+  canvasHeight = windowHeight - 50;
+
+  canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent("canvasContainer");
 
-  $("#helpButton").on("click", function() {
-    $("#instructions").modal("show");
-  });
-
+  // Set Palette Button Colors
   $("#palette").children("button").each( function() {
     let rgb = $(this).attr("data-rgb").split(",");
     $(this).css("background-color", `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
   });
 
+  // Set Page Thumbnails
   $("#pages").children("button").each( function() {
-  let fileName = $(this).attr("data-file-name");
-  $(this).css("background-image", `url("pages/${fileName}.jpg")`);
-});
+    let pageNumber = $(this).attr("data-page-number");
+    $(this).css("background-image", `url("pages/page_${pageNumber}.jpg")`);
+  });
 
+  // Help Button
+  $("#helpButton").on("click", showModal);
+
+  // Palette Buttons
   $("#palette button").on("click", function(){
     changeColor($(this));
   });
 
-  $("#brushSize").on("change", function(){
-    changeBrushSize();
-  });
+  // Brush Size Slider
+  $("#brushSize").on("change", changeBrushSize);
 
+  // Pages Buttons
   $("#pages button").on("click", function(){
     changePage($(this));
   });
 
-  $("#clear").on("click", function() {
-    clearPage();
-  });
+  // Clear Button
+  $("#clear").on("click", clearPage);
 
-  $("#save").on("click", function() {
-    savePage();
-  });
+  // Save Button
+  $("#save").on("click", savePage);
 
-  image(img, 0, 0, canvasWidth, windowHeight - 50);
+  // Display Default Page
+  image(defaultPage, 0, 0, canvasWidth, canvasHeight);
 
   noStroke();
   colorMode(RGB, 255, 255, 255, 1);
-  fill(255, 0, 0, 0.1);
+  fill(211, 47, 47, 0.1);
 }
 
 function draw() {
   if (mouseIsPressed) {
-    ellipse(mouseX, mouseY, brushSize, brushSize);
+    ellipse(mouseX, mouseY, brushSize);
   }
 }
 
-function keyPressed() {
-  if (keyCode == LEFT_ARROW) {
-    saveCanvas(canvas, "coloring_page.png");
-  }
+// Event Callbacks
+function showModal() {
+  $("#instructions").modal("show");
 }
 
 function changeColor(button) {
@@ -84,11 +85,11 @@ function changeBrushSize() {
 
 function changePage(button) {
   pageNumber = button.attr("data-page-number");
-  image(pages[pageNumber], 0, 0, canvasWidth, windowHeight - 50);
+  image(pages[pageNumber], 0, 0, canvasWidth, canvasHeight);
 }
 
 function clearPage() {
-  image(pages[pageNumber], 0, 0, canvasWidth, windowHeight - 50);
+  image(pages[pageNumber], 0, 0, canvasWidth, canvasHeight);
 }
 
 function savePage() {
