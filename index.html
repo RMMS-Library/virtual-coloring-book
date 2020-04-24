@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The Possible Book | Virtual RMMS Library</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+    <div id="instructions" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Laurindo Feliciano's <span class="font-italic">The Possible Book</span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Welcome to the Virtual RMMS Library version of the celebrated Brazillian artist Laurindo Feliciano's
+              brand-new coloring book <span class="font-italic">The Possible Book</span>! Mr. Feliciano generously
+              made the coloring book available for free for everyone to access. Now it has been transformed into
+              an online version by a super programmer Erina Chavez (Ms. Chavez's daughter!) over a Zoom session one
+              evening to make it possible for all of you to color. Enjoy!!!
+            </p>
+            <ol>
+              <li>Choose your image from the choices on the right.</li>
+              <li>Your cursor will become a paintbrush when you <span class="font-weight-bold">click and drag</span> within the canvas.</li>
+              <li>Choose a color from the palette by clicking the color you want.</li>
+              <li>You can <span class="font-weight-bold">change the brush width</span> by toggling the Paint Brush Size slider.</li>
+              <li>Once you are done coloring, click on the <span class="font-weight-bold">"Save" button</span> on the bottom left, choose <span class="font-weight-bold">"Save to Google Doc"</span></li>
+              <li>Attach your coloring sheet file "The Possible Book" from your Drive, and <span class="font-weight-bold">share with Ms. Chavez!</span></li>
+            </ol>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <i id="helpButton" class="fas fa-question-circle"></i>
+
+    <div class="d-flex justify-content-center">
+      <div>
+        <div class="d-flex">
+          <div id="brushSizeContainer">
+            <p class="text-center">Paint Brush Sizes</p>
+            <div class="d-flex justify-content-center">
+              <div id="brushSizeLabels">
+                <p>10</p>
+                <p>9</p>
+                <p>8</p>
+                <p>7</p>
+                <p>6</p>
+                <p>5</p>
+                <p>4</p>
+                <p>3</p>
+                <p>2</p>
+                <p>1</p>
+              </div>
+
+              <input id="brushSize" type="range" min="10" max="100" step="10" value="20" list="brushTicks">
+
+              <datalist id="brushTicks">
+                <option value="10"></option>
+                <option value="20"></option>
+                <option value="30"></option>
+                <option value="40"></option>
+                <option value="50"></option>
+                <option value="60"></option>
+                <option value="70"></option>
+                <option value="80"></option>
+                <option value="90"></option>
+                <option value="100"></option>
+              </datalist>
+            </div>
+          </div>
+
+          <div id="palette">
+            <p class="text-center">Color Palette</p>
+
+            <button class="margin-right" data-rgb="211,47,47"></button>
+            <button data-rgb="194,24,91"></button>
+            <br />
+            <button class="margin-right" data-rgb="123,31,162"></button>
+            <button data-rgb="81,45,168"></button>
+            <br />
+            <button class="margin-right" data-rgb="48,63,159"></button>
+            <button data-rgb="25,118,210"></button>
+            <br />
+            <button class="margin-right" data-rgb="2,136,209"></button>
+            <button data-rgb="0,151,167"></button>
+            <br />
+            <button class="margin-right" data-rgb="0,121,107"></button>
+            <button data-rgb="56,142,60"></button>
+            <br />
+            <button class="margin-right" data-rgb="104,159,56"></button>
+            <button data-rgb="175,180,43"></button>
+            <br />
+            <button class="margin-right" data-rgb="251,192,45"></button>
+            <button data-rgb="255,160,0"></button>
+            <br />
+            <button class="margin-right" data-rgb="245,124,0"></button>
+            <button data-rgb="230,74,25"></button>
+            <br />
+            <button class="margin-right" data-rgb="93,64,55"></button>
+            <button data-rgb="97,97,97"></button>
+            <br />
+            <button class="margin-right" data-rgb="69,90,100"></button>
+            <button data-rgb="255,255,255"></button>
+          </div>
+        </div>
+
+        <div id="actionButtons" class="d-flex justify-content-end">
+          <button id="clear">Clear</button>
+          <button id="save">Save</button>
+        </div>
+      </div>
+
+      <div id="canvasContainer"></div>
+
+      <div id="pages" class="text-center">
+        <p class="text-center">Coloring Sheets</p>
+
+        <button data-page-number="0" data-file-name="cover"></button>
+        <br />
+        <button data-page-number="1" data-file-name="page_1"></button>
+        <button data-page-number="2" data-file-name="page_2"></button>
+        <br />
+        <button data-page-number="3" data-file-name="page_3"></button>
+        <button data-page-number="4" data-file-name="page_4"></button>
+        <br />
+        <button data-page-number="5" data-file-name="page_5"></button>
+        <button data-page-number="6" data-file-name="page_6"></button>
+        <br />
+        <button data-page-number="7" data-file-name="page_7"></button>
+        <button data-page-number="8" data-file-name="page_8"></button>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="p5.min.js"></script>
+    <script type="text/javascript" src="rmms_coloring_book.js"></script>
+  </body>
+</html>
